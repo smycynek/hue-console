@@ -66,26 +66,26 @@
   <h2>Settings</h2>
     <table>
     <tr>
-      <td>State</td>
+      <td colspan="2">State</td>
       <td><button ng-click="setOnOff(true)">On</button></td>
       <td><button ng-click="setOnOff(false)">Off</button></td>
     </tr>
 
     <tr>
-      <td colspan="1">Temp</td>
-      <td colspan="3"><button style="width : 50px" ng-click="setCustomTemperature()">Set</button>
+      <td colspan="2">Temperature</td>
+      <td colspan="4">
       <range></range><span>{{colorTemperature}}K</span></td>
     </tr>
   
     <tr>
-      <td>Color</td>
+      <td colspan="2">Color</td>
       <td><button ng-click="setRed()">Red</button></td>
       <td><button ng-click="setBlue()">Blue</button></td>
       <td><button ng-click="setGreen()">Green</button></td>
     </tr>
 
     <tr>
-      <td>Intensity</td>
+      <td colspan="2">Intensity</td>
       <td><button ng-click="setDim()">Dim</button></td>
       <td><button ng-click="setBright()">Bright</button></td>
     </tr>

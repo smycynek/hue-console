@@ -21,6 +21,7 @@ hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
     $scope.lightCount = 0;
     $scope.lightList = "";
     $scope.colorTemperature = 4000;
+    $scope.brightness = 120;
     $scope.initHue = function() {
            $scope.user = $scope.hueApi.bridge($scope.hueBridgeIp).user($scope.hueClientId);
     }
@@ -105,8 +106,12 @@ hueNgApp.directive("range", function () {
             rangeControl.bind("change", function () {
                 scope.$apply(function () {
                     scope.colorTemperature = rangeControl.val();
+                    scope.setCustomTemperature();
                     });
                 });
             }
         };
     });
+
+
+
