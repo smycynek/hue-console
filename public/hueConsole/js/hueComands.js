@@ -1,8 +1,5 @@
-
-
 //main Angular app 
 var hueNgApp = angular.module("hueNgApp", []);
-
 
 var kelvinToMired = function(kelvin) {
     var mired = 1000000/kelvin;
@@ -12,7 +9,6 @@ var kelvinToMired = function(kelvin) {
        mired = 153; 
     return Math.floor(mired);
 };
-
 
 //Main (and only) angular controller for the body of index.html
 hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
@@ -37,10 +33,8 @@ hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
     };
 
     $scope.mainControl = function() {
-
         $scope.reconnect();
     };
-
 
     $scope.getLights = function() {
         var lightData = [];
@@ -116,5 +110,3 @@ hueNgApp.directive("range", function () {
             }
         };
     });
-
-

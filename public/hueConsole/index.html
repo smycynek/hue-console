@@ -1,107 +1,102 @@
 <!DOCTYPE html>
 <html lang="en" ng-app = "hueNgApp">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<title>Hue Console</title>
-    <script src="./lib/angularjs/angular.min.js"></script>
-<script src = "./lib/jshue.js"></script>
-<script src = "./js/hueComands.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style type="text/css" media="screen"></style>
-
-<link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.min.css">
-<style>
-body 
-{
-    margin: 12px;    
-    background-color: #bbbbbb;
-}
-input
-{
-   background-color: #bbbbbb;
-    border:solid 1px #ffffff;
-}
-
-button 
-{
-  width: 70px;
-}
-
-td {
-  padding: 2px;
-}
-
-h1 {font-size: 150%;}
-h2 {font-size: 120%;}
-
-
-</style>
-
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>Hue Console</title>
+  <script src="./lib/angularjs/angular.min.js"></script>
+  <script src = "./lib/jshue.js"></script>
+  <script src = "./js/hueComands.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css" media="screen"></style>
+  <link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.min.css">
+  <style>
+    body 
+    {
+        margin: 12px;    
+        background-color: #bbbbbb;
+    }
+    input
+    {
+        background-color: #bbbbbb;
+        border:solid 1px #ffffff;
+    }
+    button 
+    {
+        width: 70px;
+    }
+    td 
+    {
+        padding: 2px;
+    }
+    h1 
+    {
+        font-size: 150%;
+    }
+    h2 
+    {
+        font-size: 120%;
+    }
+  </style>
 </head>
 <body ng-controller="hueCtrl" data-ng-init="mainControl()">
-<h1>Philips Hue Console</h1>
+  <h1>Philips Hue Console</h1>
+  <div class="hidden-xs">
+    <p> 
+     Getting started with Hue programming is simple using using <a href="https://github.com/blargoner/jshue">jsHue</a>
+     and the <a href="http://www.developers.meethue.com/">public Philips Hue API</a>
+    </p>
+    <p>
+      One thing I like about the jsHue wrapper for the Philips Hue REST API is that it is very minimal.You typically pass some JSON that you'd need to put into a PUT or POST body into a jsHue javascript function, so if the JSON spec changes, the javascript wrapper doesn't break.  
+    </p>
 
-<div class="hidden-xs">
-<p> 
-  Getting started with Hue programming is simple using using <a href="https://github.com/blargoner/jshue">jsHue</a>
-  and the <a href="http://www.developers.meethue.com/">public Philips Hue API</a>
-</p>
+    <h2>Connection</h2>
+    <p>Client ID: <input type="text" id="hueClientId" ng-model="hueClientId"></input>
+    Bridge IP: <input type="text" id="hueBridgeIp" ng-model="hueBridgeIp"></input>
+    <img src="./images/refresh62.png" ng-click="reconnect()"/></p>
+  </div>
 
-<p>
-  One thing I like about the jsHue wrapper for the Philips Hue REST API is that it is very minimal.  You typically pass some JSON that you'd need to put into a PUT or POST body into a jsHue javascript function, so if the JSON spec changes, the javascript wrapper doesn't break.  
-</p>
+  <h2>Lights</h2>
+  <table>
+    <tr ng-repeat="x in lightList">
+    <td>{{x}}</td> 
+    <td> <input type="checkbox" checked="checked"  DISABLED/></td>  
+  </table>
 
-<h2>Connection</h2>
-<p>Client ID: <input type="text" id="hueClientId" ng-model="hueClientId"></input>
-Bridge IP: <input type="text" id="hueBridgeIp" ng-model="hueBridgeIp"></input>
-<img src="./images/refresh62.png" ng-click="reconnect()"/></p>
-</div>
+  <h2>Settings</h2>
+    <table>
+    <tr>
+      <td>State</td>
+      <td><button ng-click="setOnOff(true)">On</button></td>
+      <td><button ng-click="setOnOff(false)">Off</button></td>
+    </tr>
 
-<h2>Lights</h2>
-<table>
- <tr ng-repeat="x in lightList">
-  <td>{{x}}</td> 
-  <td> <input type="checkbox" checked="checked"  DISABLED/></td>  
-</table>
-
-<h2>Settings</h2>
-<table>
-<tr>
-  <td>State</td>
-  <td><button ng-click="setOnOff(true)">On</button></td>
-  <td><button ng-click="setOnOff(false)">Off</button></td>
-</tr>
-
-<tr>
-  <td colspan="1">Temp</td>
-  <td colspan="3"><button style="width : 50px" ng-click="setCustomTemperature()">Set</button>
-  <range></range><span>{{colorTemperature}}K</span></td>
-  </tr>
+    <tr>
+      <td colspan="1">Temp</td>
+      <td colspan="3"><button style="width : 50px" ng-click="setCustomTemperature()">Set</button>
+      <range></range><span>{{colorTemperature}}K</span></td>
+    </tr>
   
-  <tr>
-  <td>Color</td>
-  <td><button ng-click="setRed()">Red</button></td>
-  <td><button ng-click="setBlue()">Blue</button></td>
-  <td><button ng-click="setGreen()">Green</button></td>
-</tr>
+    <tr>
+      <td>Color</td>
+      <td><button ng-click="setRed()">Red</button></td>
+      <td><button ng-click="setBlue()">Blue</button></td>
+      <td><button ng-click="setGreen()">Green</button></td>
+    </tr>
 
-<tr>
-  <td>Intensity</td>
-  <td><button ng-click="setDim()">Dim</button></td>
-  <td><button ng-click="setBright()">Bright</button></td>
-</tr>
+    <tr>
+      <td>Intensity</td>
+      <td><button ng-click="setDim()">Dim</button></td>
+      <td><button ng-click="setBright()">Bright</button></td>
+    </tr>
+    </table>
 
-</table>
+  <hr>
+    <dd><a href="mailto:sv@stevenvictor.net">
+      <img src="./images/close13.png"/></a> |
+      <a href="https://github.com/smycynek/">
+      <img src="./images/github7.png"/></a> |
+      <a href="about.html"><img src="./images/creative.png"/></a></dd>
 
-<hr>
-  <dd><a href="mailto:sv@stevenvictor.net">
-    <img src="./images/close13.png"/></a> |
-    <a href="https://github.com/smycynek/">
-    <img src="./images/github7.png"/></a> |
-
-    <a href="about.html"><img src="./images/creative.png"/></a></dd>
-
-
-</body>
+  </body>
 </html>
