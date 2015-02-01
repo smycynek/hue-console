@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+var debug = require('debug')('my-application');
+var app = require('../app');
+
+app.set('port', process.env.PORT || 3000);
+var server;
+
+var boot = function() {
+    server = app.listen(app.get('port'), function() {
+    debug('Express server listening on port ' + server.address().port);
+    });
+};
+
+var shutdown = function() {
+    server.close();
+};
+
+if (require.main === module) {
+    boot();
+}
+else {
+    console.log('Running app as a module');
+    exports.boot = boot;
+    exports.shutdown = shutdown;
+    exports.port = app.get('port');
+}

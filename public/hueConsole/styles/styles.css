@@ -1,0 +1,32 @@
+.standalone
+  {
+    display: block;
+  }
+
+h1,h2,h3,h4,h5,h6,td,th,p,div,li,body,dl
+{
+  margin-left: 7px;
+}
+
+h1
+{
+    font-size: 1.5em;
+}
+
+h2
+{
+    font-size: 1.25em;
+}
+
+h3
+{
+    font-size: 1.125em;
+}
+p.clear {
+    clear: both;
+}
+
+tr
+{
+  padding-bottom: 2px;
+}
