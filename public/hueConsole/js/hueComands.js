@@ -10,6 +10,7 @@ var kelvinToMired = function(kelvin) {
     return Math.floor(mired);
 };
 
+
 //Main (and only) angular controller for the body of index.html
 hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
     $scope.debug = false;
@@ -27,10 +28,9 @@ hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
     }
     
     $scope.reconnect = function() {
-        $scope.lightList = "Initializing...";
+        $scope.lightList = ["Initializing..."];
         $scope.initHue();
         var calledLights = $scope.getLights();
-       // alert("calledLights? " + calledLights);
     };
 
     $scope.mainControl = function() {
@@ -51,7 +51,7 @@ hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
 
         var failure = function(data) {
             $scope.lightCount = -1;
-            $scope.lightList = JSON.stringify(data);
+            $scope.lightList = ["error", JSON.stringify(data)];
         };
 
         var calledLights = $scope.user.getLights(success, failure);
@@ -97,7 +97,7 @@ hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
 
 //Extra directive to create an html range input that binds its value to an angular scope variable.
 //(Needed only for IE -- other browers do it natively)
-hueNgApp.directive("range", function () {
+hueNgApp.directive("range", function () { 
     return {
         restrict: "E",
         template: '<input type="range" title="Change color temperature" min="2000" max="6500" value="4000" ng-model="colorTemperature" style="width:100px; display:inline"/>',
@@ -112,6 +112,7 @@ hueNgApp.directive("range", function () {
             }
         };
     });
+
 
 
 
