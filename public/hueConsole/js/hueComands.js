@@ -1,34 +1,33 @@
 //main Angular app 
 var hueNgApp = angular.module("hueNgApp", []);
 
-var kelvinToMired = function(kelvin) {
-    var mired = 1000000/kelvin;
-    if (mired > 500)
-       mired = 500;
-    if (mired < 153)
-       mired = 153; 
-    return Math.floor(mired);
-};
-
-
 //Main (and only) angular controller for the body of index.html
-hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
+hueNgApp.controller("HueCtrl", function ($scope, $window, $http) {
     $scope.debug = false;
-    $scope.fadeSpeed = 0;
     $scope.hueApi = jsHue();
     $scope.hueBridgeIp = "192.168.1.106";
     $scope.hueClientId = "newdeveloper";
-    //$scope.user = $scope.hueApi.bridge($scope.hueBridgeIp).user($scope.hueClientId);
+    $scope.isDisabled  = true;
     $scope.lightCount = 0;
     $scope.lightList = "";
     $scope.colorTemperature = 4000;
-    $scope.brightness = 120;
+    $scope.brightness = 180;
     $scope.initHue = function() {
            $scope.user = $scope.hueApi.bridge($scope.hueBridgeIp).user($scope.hueClientId);
     }
     
+    $scope.formatInt = function(intValue, totalSize) {
+        var formattedString = intValue + "";
+        while (formattedString.length < totalSize) {
+            formattedString = "0" + formattedString;
+        };
+        return formattedString;
+    };
+
     $scope.reconnect = function() {
         $scope.lightList = ["Initializing..."];
+        $scope.updating = "(Updating...)";
+        $scope.isDisabled =  true;
         $scope.initHue();
         var calledLights = $scope.getLights();
     };
@@ -36,6 +35,22 @@ hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
     $scope.mainControl = function() {
         $scope.reconnect();
     };
+
+    $scope.getCurrentSettings = function() {
+        var success = function(data) {
+            var brightness = Number(data["state"]["bri"]);
+            var ctMired = Number(data["state"]["ct"]);
+                  $scope.brightness = brightness;
+                  $scope.colorTemperature = miredToKelvin(ctMired);
+                  $scope.updating = "";
+                  $scope.$apply();
+                };
+               var failure = function(data) {
+               alert("Error getting lighting settings: " + JSON.stringify(data));
+               $scope.isDisabled = true;
+            };
+        $scope.user.getLight(1, success);  //sample settings off light with ID 1 for now.
+    }
 
     $scope.getLights = function() {
         var lightData = [];
@@ -46,12 +61,15 @@ hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
             }
            $scope.lightList = lightData;
            $scope.lightCount = lightData.length;
+           $scope.isDisabled = false;
            $scope.$apply();
+           $scope.getCurrentSettings();
         };
 
         var failure = function(data) {
             $scope.lightCount = -1;
-            $scope.lightList = ["error", JSON.stringify(data)];
+            $scope.lightList = ["Error getting light data: ", JSON.stringify(data)];
+            $scope.isDisabled = true;
         };
 
         var calledLights = $scope.user.getLights(success, failure);
@@ -69,8 +87,8 @@ hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
     };
 
 
-    $scope.setCustomTemperature = function() {
-      var mired = kelvinToMired($scope.colorTemperature);
+    $scope.setCustomTemperature = function(kelvinValue) {
+      var mired = kelvinToMired(kelvinValue);
         $scope.setAll($scope.user, {ct:mired}, $scope.lightCount);
     };
 
@@ -86,27 +104,24 @@ hueNgApp.controller("hueCtrl", function ($scope, $window, $http) {
         $scope.setAll($scope.user, {hue:25500, sat:255}, $scope.lightCount);
     };
 
-    $scope.setDim = function() {
-        $scope.setAll($scope.user, {bri:10}, $scope.lightCount);
-    };
-
-    $scope.setBright = function() {
-        $scope.setAll($scope.user, {bri:255}, $scope.lightCount);
+    $scope.setBrightness = function(val) {
+         $scope.brightness = val;
+         $scope.setAll($scope.user, {bri:$scope.brightness}, $scope.lightCount);
     };
 });
 
 //Extra directive to create an html range input that binds its value to an angular scope variable.
 //(Needed only for IE -- other browers do it natively)
-hueNgApp.directive("range", function () { 
+hueNgApp.directive("rangetemp", function () { 
     return {
         restrict: "E",
-        template: '<input type="range" title="Change color temperature" min="2000" max="6500" value="4000" ng-model="colorTemperature" style="width:100px; display:inline"/>',
+        template: '<input id ="tempRange"  ng-disabled="isDisabled" type="range" title="Change color temperature" min="2000" max="6500" value="4000" ng-model="colorTemperature" style="width:100px; display:inline"/>',
         link: function (scope, element) {
             var rangeControl = element.find("input");
             rangeControl.bind("change", function () {
                 scope.$apply(function () {
                     scope.colorTemperature = rangeControl.val();
-                    scope.setCustomTemperature();
+                    scope.setCustomTemperature(scope.colorTemperature);
                     });
                 });
             }
@@ -114,5 +129,39 @@ hueNgApp.directive("range", function () {
     });
 
 
+hueNgApp.directive("rangebright", function () { 
+    return {
+        restrict: "E",
+        template: '<input id="brightnessRange" ng-disabled="isDisabled" type="range" title="Change brightness" min="0" max="255" value="180" ng-model="brightness" style="width:100px; display:inline"/>',
+        link: function (scope, element) {
+            var rangeControl = element.find("input");
+            rangeControl.bind("change", function () {
+                scope.$apply(function () {
+                    scope.brightness= Math.round(rangeControl.val());
+                    scope.setBrightness(scope.brightness);
+                    });
+                });
+            }
+        };
+    });
+
+
+var kelvinToMired = function(kelvin) {
+    var mired = 1000000/kelvin;
+    if (mired > 500)
+       mired = 500;
+    if (mired < 153)
+       mired = 153; 
+    return Math.floor(mired);
+};
+
+var miredToKelvin = function(mired) {
+    var kelvin = 1000000/mired;
+    if (kelvin > 6500)
+       kelvin = 6500;
+    if (kelvin < 2000)
+       kelvin = 2000; 
+    return Math.floor(kelvin);
+};
 
 

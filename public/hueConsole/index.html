@@ -39,7 +39,7 @@
     }
   </style>
 </head>
-<body ng-controller="hueCtrl" data-ng-init="mainControl()">
+<body ng-controller="HueCtrl" data-ng-init="mainControl()">
   <h1>Philips Hue Console</h1>
   <div class="hidden-xs">
     <p> 
@@ -63,32 +63,31 @@
     <td> <input type="checkbox" checked="checked"  DISABLED/></td>  
   </table>
 
-  <h2>Settings</h2>
+  <h2>Settings {{updating}}
+
+  </h2>
     <table>
     <tr>
       <td colspan="2">State</td>
-      <td><button ng-click="setOnOff(true)">On</button></td>
-      <td><button ng-click="setOnOff(false)">Off</button></td>
+      <td><button ng-disabled="isDisabled" ng-click="setOnOff(true)">On</button></td>
+      <td><button ng-disabled="isDisabled"  ng-click="setOnOff(false)">Off</button></td>
     </tr>
 
     <tr>
       <td colspan="2">Temperature</td>
       <td colspan="4">
-      <range></range><span>{{colorTemperature}}K</span></td>
+       <rangetemp></rangetemp><span>{{colorTemperature}}K</span></td>
     </tr>
   
     <tr>
       <td colspan="2">Color</td>
-      <td><button ng-click="setRed()">Red</button></td>
-      <td><button ng-click="setBlue()">Blue</button></td>
-      <td><button ng-click="setGreen()">Green</button></td>
+      <td><button ng-disabled="isDisabled"  ng-click="setRed()">Red</button></td>
+      <td><button ng-disabled="isDisabled"  ng-click="setBlue()">Blue</button></td>
+      <td><button ng-disabled="isDisabled"  ng-click="setGreen()">Green</button></td>
     </tr>
-
-    <tr>
-      <td colspan="2">Intensity</td>
-      <td><button ng-click="setDim()">Dim</button></td>
-      <td><button ng-click="setBright()">Bright</button></td>
-    </tr>
+    <tr> 
+      <td colspan="2"> Brightness</td>
+      <td colspan="4"><rangebright></rangebright><span>{{formatInt(brightness,3)}}</span></td>
     </table>
 
   <hr>
