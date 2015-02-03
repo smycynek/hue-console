@@ -12,6 +12,9 @@ hueNgApp.controller("HueCtrl", function ($scope, $window, $http) {
     $scope.lightList = "";
     $scope.colorTemperature = 4000;
     $scope.brightness = 180;
+    $scope.hueValue = 0;
+    $scope.saturation = 128;
+
     $scope.initHue = function() {
            $scope.user = $scope.hueApi.bridge($scope.hueBridgeIp).user($scope.hueClientId);
     }
@@ -93,21 +96,31 @@ hueNgApp.controller("HueCtrl", function ($scope, $window, $http) {
     };
 
     $scope.setRed = function() {
-        $scope.setAll($scope.user, {hue:0, sat:255}, $scope.lightCount);
+         $scope.setHue(0);
     };
 
     $scope.setBlue = function() {
-        $scope.setAll($scope.user, {hue:46920, sat:255}, $scope.lightCount);
+        $scope.setHue(46920);
     };
 
     $scope.setGreen= function() {
-        $scope.setAll($scope.user, {hue:25500, sat:255}, $scope.lightCount);
+        $scope.setHue(25500);
     };
 
     $scope.setBrightness = function(val) {
          $scope.brightness = val;
          $scope.setAll($scope.user, {bri:$scope.brightness}, $scope.lightCount);
     };
+
+    $scope.setHue = function(val) {
+         $scope.hueValue = val;
+         $scope.setAll($scope.user, {hue:$scope.hueValue}, $scope.lightCount);
+    };
+
+    $scope.setSaturation= function(val) {
+         $scope.saturation = val;
+         $scope.setAll($scope.user, {sat:$scope.saturation}, $scope.lightCount);
+    };    
 });
 
 //Extra directive to create an html range input that binds its value to an angular scope variable.
@@ -128,6 +141,37 @@ hueNgApp.directive("rangetemp", function () {
         };
     });
 
+hueNgApp.directive("rangesaturation", function () { 
+    return {
+        restrict: "E",
+        template: '<input id="saturationRange" ng-disabled="isDisabled" type="range" title="Change brightness" min="0" max="255" value="180" ng-model="saturation" style="width:100px; display:inline"/>',
+        link: function (scope, element) {
+            var rangeControl = element.find("input");
+            rangeControl.bind("change", function () {
+                scope.$apply(function () {
+                    scope.saturation= Math.round(rangeControl.val());
+                    scope.setSaturation(scope.saturation);
+                    });
+                });
+            }
+        };
+    });
+
+hueNgApp.directive("rangehue", function () { 
+    return {
+        restrict: "E",
+        template: '<input id="saturationHue" ng-disabled="isDisabled" type="range" title="Change hue" min="0" max="65535" value="0" ng-model="hueValue" style="width:100px; display:inline"/>',
+        link: function (scope, element) {
+            var rangeControl = element.find("input");
+            rangeControl.bind("change", function () {
+                scope.$apply(function () {
+                    scope.hueValue= Math.round(rangeControl.val());
+                    scope.setHue(scope.hueValue);
+                    });
+                });
+            }
+        };
+    });
 
 hueNgApp.directive("rangebright", function () { 
     return {

@@ -27,15 +27,27 @@
     }
     td 
     {
-        padding: 2px;
+        padding: 0px;
     }
     h1 
     {
         font-size: 150%;
+        padding: 0px;
+        margin-top: 3px; 
+        margin-bottom: 4px; 
     }
     h2 
     {
-        font-size: 120%;
+        font-size: 120%;        
+        padding: 0px;
+        margin-top: 3px; 
+        margin-bottom: 4px; 
+    }
+    hr
+    {
+        padding: 3px;
+        margin-top: 3px; 
+        margin-bottom: 3px; 
     }
   </style>
 </head>
@@ -69,8 +81,14 @@
     <table>
     <tr>
       <td colspan="2">State</td>
-      <td><button ng-disabled="isDisabled" ng-click="setOnOff(true)">On</button></td>
-      <td><button ng-disabled="isDisabled"  ng-click="setOnOff(false)">Off</button></td>
+
+      <td>
+        <div class="btn-group btn-group-xs" role="group" aria-label="...">
+          <button ng-disabled="isDisabled" ng-click="setOnOff(true)" type="button" class="btn btn-default">On</button>
+          <button ng-disabled="isDisabled" ng-click="setOnOff(false)" type="button" class="btn btn-default">Off</button>
+       </div>
+    </td>
+
     </tr>
 
     <tr>
@@ -79,15 +97,25 @@
        <rangetemp></rangetemp><span>{{colorTemperature}}K</span></td>
     </tr>
   
-    <tr>
-      <td colspan="2">Color</td>
-      <td><button ng-disabled="isDisabled"  ng-click="setRed()">Red</button></td>
-      <td><button ng-disabled="isDisabled"  ng-click="setBlue()">Blue</button></td>
-      <td><button ng-disabled="isDisabled"  ng-click="setGreen()">Green</button></td>
+
+
+    
+    <tr> 
+      <td colspan="2">Hue</td>
+      <td colspan="4"><rangehue></rangehue><span>{{formatInt(hueValue,5)}}</span>
+      <img src = "./images/red.png" ng-click="setRed()"/>
+      <img src = "./images/green.png" ng-click="setGreen()"/>
+      <img src = "./images/blue.png" ng-click="setBlue()"/>
+      </td>
     </tr>
     <tr> 
-      <td colspan="2"> Brightness</td>
+      <td colspan="2">Saturation</td>
+      <td colspan="4"><rangesaturation></rangesaturation><span>{{formatInt(saturation,3)}}</span></td>
+    </tr>
+    <tr> 
+      <td colspan="2">Brightness</td>
       <td colspan="4"><rangebright></rangebright><span>{{formatInt(brightness,3)}}</span></td>
+    <tr>
     </table>
 
   <hr>
