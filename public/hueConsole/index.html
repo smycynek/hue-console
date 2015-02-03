@@ -1,129 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" ng-app = "hueNgApp">
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta charset="utf-8">
-  <title>Hue Console</title>
-  <script src="./lib/angularjs/angular.min.js"></script>
-  <script src = "./lib/jshue.js"></script>
-  <script src = "./js/hueComands.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style type="text/css" media="screen"></style>
-  <link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.min.css">
-  <style>
-    body 
-    {
-        margin: 12px;    
-        background-color: #bbbbbb;
-    }
-    input
-    {
-        background-color: #bbbbbb;
-        border:solid 1px #ffffff;
-    }
-    button 
-    {
-        width: 70px;
-    }
-    td 
-    {
-        padding: 0px;
-    }
-    h1 
-    {
-        font-size: 150%;
-        padding: 0px;
-        margin-top: 3px; 
-        margin-bottom: 4px; 
-    }
-    h2 
-    {
-        font-size: 120%;        
-        padding: 0px;
-        margin-top: 3px; 
-        margin-bottom: 4px; 
-    }
-    hr
-    {
-        padding: 3px;
-        margin-top: 3px; 
-        margin-bottom: 3px; 
-    }
-  </style>
-</head>
-<body ng-controller="HueCtrl" data-ng-init="mainControl()">
-  <h1>Philips Hue Console</h1>
-  <div class="hidden-xs">
-    <p> 
-     Getting started with Hue programming is simple using using <a href="https://github.com/blargoner/jshue">jsHue</a>
-     and the <a href="http://www.developers.meethue.com/">public Philips Hue API</a>
-    </p>
-    <p>
-      One thing I like about the jsHue wrapper for the Philips Hue REST API is that it is very minimal.You typically pass some JSON that you'd need to put into a PUT or POST body into a jsHue javascript function, so if the JSON spec changes, the javascript wrapper doesn't break.  
-    </p>
-
-    <h2>Connection</h2>
-    <p>Client ID: <input type="text" id="hueClientId" ng-model="hueClientId"></input>
-    Bridge IP: <input type="text" id="hueBridgeIp" ng-model="hueBridgeIp"></input>
-    <img src="./images/refresh62.png" ng-click="reconnect()"/></p>
-  </div>
-
-  <h2>Lights</h2>
-  <table>
-    <tr ng-repeat="x in lightList">
-    <td>{{x}}</td> 
-    <td> <input type="checkbox" checked="checked"  DISABLED/></td>  
-  </table>
-
-  <h2>Settings {{updating}}
-
-  </h2>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Hue Console</title>
+    <script src="./lib/angularjs/angular.min.js"></script>
+    <script src = "./lib/jshue.js"></script>
+    <script src = "./js/hueComands.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css" media="screen"></style>
+    <link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./styles/styles.css">
+  </head>
+  <body ng-controller="HueCtrl" data-ng-init="mainControl()">
+    <h1>Philips Hue Console</h1>
+    <div class="hidden-xs">
+      <p>
+      Getting started with Hue programming is simple using using <a href="https://github.com/blargoner/jshue">jsHue</a>
+      and the <a href="http://www.developers.meethue.com/">public Philips Hue API</a>
+      </p>
+      <p>
+      One thing I like about the jsHue wrapper for the Philips Hue REST API is that it is very minimal.You typically pass some JSON that you'd need to put into a PUT or POST body into a jsHue javascript function, so if the JSON spec changes, the javascript wrapper doesn't break.
+      </p>
+      <h2>Connection</h2>
+      <p>Client ID: <input type="text" id="hueClientId" ng-model="hueClientId"/>
+      Bridge IP: <input type="text" id="hueBridgeIp" ng-model="hueBridgeIp"/>
+      <img src="./images/refresh62.png" ng-click="reconnect()"/></p>
+    </div>
+    <h2>Lights</h2>
     <table>
-    <tr>
-      <td colspan="2">State</td>
-
-      <td>
-        <div class="btn-group btn-group-xs" role="group" aria-label="...">
-          <button ng-disabled="isDisabled" ng-click="setOnOff(true)" type="button" class="btn btn-default">On</button>
-          <button ng-disabled="isDisabled" ng-click="setOnOff(false)" type="button" class="btn btn-default">Off</button>
-       </div>
-    </td>
-
-    </tr>
-
-    <tr>
-      <td colspan="2">Temperature</td>
-      <td colspan="4">
-       <rangetemp></rangetemp><span>{{colorTemperature}}K</span></td>
-    </tr>
-  
-
-
-    
-    <tr> 
-      <td colspan="2">Hue</td>
-      <td colspan="4"><rangehue></rangehue><span>{{formatInt(hueValue,5)}}</span>
-      <img src = "./images/red.png" ng-click="setRed()"/>
-      <img src = "./images/green.png" ng-click="setGreen()"/>
-      <img src = "./images/blue.png" ng-click="setBlue()"/>
-      </td>
-    </tr>
-    <tr> 
-      <td colspan="2">Saturation</td>
-      <td colspan="4"><rangesaturation></rangesaturation><span>{{formatInt(saturation,3)}}</span></td>
-    </tr>
-    <tr> 
-      <td colspan="2">Brightness</td>
-      <td colspan="4"><rangebright></rangebright><span>{{formatInt(brightness,3)}}</span></td>
-    <tr>
-    </table>
-
-  <hr>
-    <dd><a href="mailto:sv@stevenvictor.net">
-      <img src="./images/close13.png"/></a> |
-      <a href="https://github.com/smycynek/">
-      <img src="./images/github7.png"/></a> |
-      <a href="about.html"><img src="./images/creative.png"/></a></dd>
-
-  </body>
-</html>
+      <tr ng-repeat="x in lightList">
+        <td>{{x}}</td>
+        <td> <input type="checkbox" checked="checked"  DISABLED/></td>
+      </table>
+      <h2>Settings {{updating}}
+      </h2>
+      <table>
+        <tr>
+          <td colspan="2">State</td>
+          <td colspan="4">
+            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+              <button ng-disabled="isDisabled" ng-click="setOnOff(true)" type="button" class="btn btn-default">On</button>
+              <button ng-disabled="isDisabled" ng-click="setOnOff(false)" type="button" class="btn btn-default">Off</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">Temperature</td>
+          <td colspan="4">
+          <rangetemp></rangetemp><span>{{colorTemperature}}K</span></td>
+        </tr>
+        <tr>
+          <td colspan="2">Hue</td>
+          <td colspan="4"><rangehue></rangehue><span>{{formatInt(hueValue,5)}}</span>
+            <img src = "./images/red.png" alt = "red" ng-click="setRed()" ng-disabled="isDisabled"/>
+            <img src = "./images/green.png" alt = "green" ng-click="setGreen()" ng-disabled="isDisabled"/>
+            <img src = "./images/blue.png" alt = "blue" ng-click="setBlue()" ng-disabled="isDisabled"/>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">Saturation</td>
+          <td colspan="4"><rangesaturation></rangesaturation><span>{{formatInt(saturation,3)}}</span></td>
+        </tr>
+        <tr>
+          <td colspan="2">Brightness</td>
+          <td colspan="4"><rangebright></rangebright><span>{{formatInt(brightness,3)}}</span></td>
+        </tr>
+          </table>
+          <hr>
+          <dl>
+          <dd><a href="mailto:sv@stevenvictor.net">
+          <img src="./images/close13.png" alt="email"/></a> |
+          <a href="https://github.com/smycynek/">
+          <img src="./images/github7.png" alt="github"/></a> |
+          <a href="about.html"><img src="./images/creative.png" alt="licensing"/></a></dd>
+          </dl>
+        </body>
+      </html>

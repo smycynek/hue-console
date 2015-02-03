@@ -1,32 +1,39 @@
-.standalone
-  {
-    display: block;
-  }
-
-h1,h2,h3,h4,h5,h6,td,th,p,div,li,body,dl
+body 
 {
-  margin-left: 7px;
+    margin: 12px;    
+    background-color: #bbbbbb;
 }
 
-h1
+input
 {
-    font-size: 1.5em;
+    background-color: #bbbbbb;
+    border:solid 1px #ffffff;
 }
 
-h2
+td 
 {
-    font-size: 1.25em;
+    padding: 0px;
 }
 
-h3
+h1 
 {
-    font-size: 1.125em;
-}
-p.clear {
-    clear: both;
+    font-size: 150%;
+    padding: 0px;
+    margin-top: 3px; 
+    margin-bottom: 4px; 
 }
 
-tr
+h2 
 {
-  padding-bottom: 2px;
+    font-size: 120%;        
+    padding: 0px;
+    margin-top: 3px; 
+    margin-bottom: 4px; 
+}
+
+hr
+{
+    padding: 3px;
+    margin-top: 3px; 
+    margin-bottom: 3px; 
 }
