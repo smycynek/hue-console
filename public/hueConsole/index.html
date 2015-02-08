@@ -22,11 +22,15 @@
       <p>
       One thing I like about the jsHue wrapper for the Philips Hue REST API is that it is very minimal.You typically pass some JSON that you'd need to put into a PUT or POST body into a jsHue javascript function, so if the JSON spec changes, the javascript wrapper doesn't break.
       </p>
-      <h2>Connection</h2>
+    </div>
+      <h2>Connection </h2>
+      <p>Click the router icon to get your Hue bridge IP address; click the refresh icon to connect
+      to the bridge.</p>
       <p>Client ID: <input type="text" id="hueClientId" ng-model="hueClientId"/>
       Bridge IP: <input type="text" id="hueBridgeIp" ng-model="hueBridgeIp"/>
-      <img src="./images/refresh62.png" ng-click="reconnect()"/></p>
-    </div>
+      <img src ="./images/router3.png" ng-click="findBridge()" alt = "Find your hue bridge."/>
+      <img src="./images/refresh62.png" ng-click="reconnect()" alt = "Connect/reconnect"/>
+
     <h2>Lights</h2>
     <table>
       <tr ng-repeat="x in lightList">
@@ -48,25 +52,37 @@
         <tr>
           <td colspan="2">Temperature</td>
           <td colspan="4">
-          <rangetemp></rangetemp><span>{{colorTemperature}}K</span></td>
+          <rangetemp></rangetemp><span style = "{{temperatureDirtyState}};">
+<span style = "color:black">
+          {{colorTemperature}}K</span></span></td>
         </tr>
         <tr>
           <td colspan="2">Hue</td>
-          <td colspan="4"><rangehue></rangehue><span>{{formatInt(hueValue,5)}}</span>
-            <img src = "./images/red.png" style="float : right;" alt = "red" ng-click="setRed()" ng-disabled="isDisabled"/>
-            <img src = "./images/green.png" style="float : right;"  alt = "green" ng-click="setGreen()" ng-disabled="isDisabled"/>
-            <img src = "./images/blue.png" style="float : right;" alt = "blue" ng-click="setBlue()" ng-disabled="isDisabled"/>
+          <td colspan="4"><rangehue></rangehue>
+            <img src = "./images/red.png"  alt = "red" ng-click="setRed()" ng-disabled="isDisabled"/>
+            <img src = "./images/green.png"  alt = "green" ng-click="setGreen()" ng-disabled="isDisabled"/>
+            <img src = "./images/blue.png"  alt = "blue" ng-click="setBlue()" ng-disabled="isDisabled"/><span style="{{hueSaturationDirtyState}};"><span style="color:black;">{{formatInt(hueValue,5)}}</span></span>
+          </td>
+        </tr>
+        <tr ng-show="debug">
+          <td colspan="2">
+            Color Preview
+          </td>
+          <td colspan="4">
+            <colorpreview></colorpreview>
+            <div style="float:right;margin:2px;display:inline-block;width:24px;height:24px;background-color:{{debugHexColor}};"> <span style="float:right;">{{debugHexColor}}</span></div>
           </td>
         </tr>
         <tr>
           <td colspan="2">Saturation</td>
-          <td colspan="4"><rangesaturation></rangesaturation><span>{{formatInt(saturation,3)}}</span></td>
+          <td colspan="4"><rangesaturation></rangesaturation><span style="{{hueSaturationDirtyState}};"><span style="color:black;">{{formatInt(saturation,3)}}</span></span></td>
         </tr>
         <tr>
           <td colspan="2">Brightness</td>
           <td colspan="4"><rangebright></rangebright><span>{{formatInt(brightness,3)}}</span></td>
         </tr>
           </table>
+          <input type="checkbox" ng-model="debug">Debug</input>
           <hr>
           <dl>
           <dd><a href="mailto:sv@stevenvictor.net">
