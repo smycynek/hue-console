@@ -1,23 +1,24 @@
 body 
 {
-    margin: 12px;    
-    background-color: #bbbbbb;
+    margin : 12px;    
+    background-color : #cccccc;
+    width : 90%;
 }
 
 input
 {
-    background-color: #bbbbbb;
+    background-color: #cccccc;
     border:solid 1px #ffffff;
 }
 
 td 
 {
-    padding: 0px;
+    padding: 1px;
 }
 
 h1 
 {
-    font-size: 150%;
+    font-size: 140%;
     padding: 0px;
     margin-top: 3px; 
     margin-bottom: 4px; 

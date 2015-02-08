@@ -44,7 +44,7 @@ hueNgApp.controller("HueCtrl", function($scope) {
     $scope.hueClientId = "newdeveloper";
     $scope.isDisabled = true;
     $scope.lightCount = 0;
-    $scope.lightList = [];
+    $scope.lightList = ["Not connected..."];
     $scope.colorTemperature = 4000;
     $scope.brightness = 180;
     $scope.hueValue = 0;
@@ -88,9 +88,9 @@ hueNgApp.controller("HueCtrl", function($scope) {
         $scope.user = $scope.hueApi.bridge($scope.hueBridgeIp).user($scope.hueClientId);
     };
 
-
-//Create a new color with RGB values scaled by a factor.
-
+    $scope.getFormattedLightList = function() {
+        return $scope.lightList.join(", ");
+    };
 
     $scope.setColor = function() {
         var hexColor = $scope.formatInt($scope.color.toString(16), 6);
@@ -107,6 +107,7 @@ hueNgApp.controller("HueCtrl", function($scope) {
 
     $scope.reconnect = function() {
         $scope.lightList = ["Initializing..."];
+        $scope.$apply();
         $scope.updating = "(Updating...)";
         $scope.isDisabled = true;
         $scope.initHue();

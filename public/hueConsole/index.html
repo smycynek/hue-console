@@ -11,7 +11,9 @@
     <style type="text/css" media="screen"></style>
     <link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./styles/styles.css">
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
   </head>
+  
   <body ng-controller="HueCtrl" data-ng-init="mainControl()">
     <h1>Philips Hue Console</h1>
     <div class="hidden-xs">
@@ -24,19 +26,31 @@
       </p>
     </div>
       <h2>Connection </h2>
-      <p>Click the router icon to get your Hue bridge IP address; click the refresh icon to connect
-      to the bridge.</p>
-      <p>Client ID: <input type="text" id="hueClientId" ng-model="hueClientId"/>
-      Bridge IP: <input type="text" id="hueBridgeIp" ng-model="hueBridgeIp"/>
-      <img src ="./images/router3.png" ng-click="findBridge()" alt = "Find your hue bridge."/>
-      <img src="./images/refresh62.png" ng-click="reconnect()" alt = "Connect/reconnect"/>
+      <p>Click the router icon to get the hue bridge IP; click the refresh icon to reconnect.</p>
+   
+<table>
+   <tr>
+    <td>Client&#8209;Id</td>
+    <td> <input  type="text" id="hueClientId" ng-model="hueClientId"/></td>
+   </tr>
+   <tr>  
+    <td>Bridge&#8209;IP</td>
+    <td > <input   type="text" id="hueBridgeIp" ng-model="hueBridgeIp"/></td>
+    <td >
+        <img src ="./images/router3.png" ng-click="findBridge()" alt = "Find your hue bridge."/>
+    </td>
+    <td >
+        <img src="./images/refresh62.png" ng-click="reconnect()" alt = "Connect/reconnect"/></td>
+   </tr>
+
+</table>
+
+
 
     <h2>Lights</h2>
-    <table>
-      <tr ng-repeat="x in lightList">
-        <td>{{x}}</td>
-        <td> <input type="checkbox" checked="checked"  DISABLED/></td>
-      </table>
+    <p>
+      {{getFormattedLightList()}}
+    </p>
       <h2>Settings {{updating}}
       </h2>
       <table>
