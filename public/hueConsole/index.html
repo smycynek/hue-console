@@ -6,6 +6,7 @@
     <title>Hue Console</title>
     <script src="./lib/angularjs/angular.min.js"></script>
     <script src = "./lib/jshue.js"></script>
+    <script src = "./js/utility.js"></script>
     <script src = "./js/hueComands.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css" media="screen"></style>
@@ -69,23 +70,18 @@
           <rangetemp></rangetemp><span style = "{{temperatureDirtyState}};">
 <span style = "color:black">
           {{colorTemperature}}K</span></span></td>
+
+          <td rowspan="4" colspan="2">
+             <div style="border-style:solid;border-color:black;border-width:1px;float:right;margin:2px;display:inline-block;width:48px;height:96px;background-color:{{debugHexColor}};{{previewStrikeout}}"> <span style="float:right;"></span></div>
+          </td>
+
         </tr>
         <tr>
           <td colspan="2">Hue</td>
           <td colspan="4"><rangehue></rangehue>
-            <img src = "./images/red.png"  alt = "red" ng-click="setRed()" ng-disabled="isDisabled"/>
-            <img src = "./images/green.png"  alt = "green" ng-click="setGreen()" ng-disabled="isDisabled"/>
-            <img src = "./images/blue.png"  alt = "blue" ng-click="setBlue()" ng-disabled="isDisabled"/><span style="{{hueSaturationDirtyState}};"><span style="color:black;">{{formatInt(hueValue,5)}}</span></span>
+            <span style="{{hueSaturationDirtyState}};"><span style="color:black;">{{formatInt(hueValue,5)}}</span></span>
           </td>
-        </tr>
-        <tr ng-show="debug">
-          <td colspan="2">
-            Color Preview
-          </td>
-          <td colspan="4">
-            <colorpreview></colorpreview>
-            <div style="float:right;margin:2px;display:inline-block;width:24px;height:24px;background-color:{{debugHexColor}};"> <span style="float:right;">{{debugHexColor}}</span></div>
-          </td>
+
         </tr>
         <tr>
           <td colspan="2">Saturation</td>
