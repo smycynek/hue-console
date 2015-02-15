@@ -22,9 +22,6 @@
       Getting started with Hue programming is simple using using <a href="https://github.com/blargoner/jshue">jsHue</a>
       and the <a href="http://www.developers.meethue.com/">public Philips Hue API</a>
       </p>
-      <p>
-      One thing I like about the jsHue wrapper for the Philips Hue REST API is that it is very minimal.You typically pass some JSON that you'd need to put into a PUT or POST body into a jsHue javascript function, so if the JSON spec changes, the javascript wrapper doesn't break.
-      </p>
     </div>
       <h2>Connection </h2>
       <p>Click the router icon to get the hue bridge IP; click the refresh icon to reconnect.</p>
@@ -72,7 +69,7 @@
           {{colorTemperature}}K</span></span></td>
 
           <td rowspan="4" colspan="2">
-             <div style="border-style:solid;border-color:black;border-width:1px;float:right;margin:2px;display:inline-block;width:48px;height:96px;background-color:{{debugHexColor}};{{previewStrikeout}}"> <span style="float:right;"></span></div>
+             <div style="border-style:solid;border-color:black;border-width:1px;float:right;margin:2px;display:inline-block;width:48px;height:96px;background-color:{{previewHexColor}};{{previewStrikeoutStyle}}"> <span style="float:right;"></span></div>
           </td>
 
         </tr>
@@ -92,14 +89,13 @@
           <td colspan="4"><rangebright></rangebright><span>{{formatInt(brightness,3)}}</span></td>
         </tr>
           </table>
-          <input type="checkbox" ng-model="debug">Debug</input>
+          <input id ="checkboxDebug" type="checkbox" ng-model="debug"/>
+          <label for="checkboxDebug">Debug</label>
           <hr>
-          <dl>
-          <dd><a href="mailto:sv@stevenvictor.net">
+          <a href="mailto:sv@stevenvictor.net">
           <img src="./images/close13.png" alt="email"/></a> |
           <a href="https://github.com/smycynek/">
           <img src="./images/github7.png" alt="github"/></a> |
-          <a href="about.html"><img src="./images/creative.png" alt="licensing"/></a></dd>
-          </dl>
+          <a href="about.html"><img src="./images/creative.png" alt="licensing"/></a>
         </body>
       </html>

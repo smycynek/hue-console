@@ -17,8 +17,8 @@ hueNgApp.controller("HueCtrl", function($scope) {
     $scope.debug = false;
     $scope.hueApi = jsHue();
     $scope.previewColor = 0;
-    $scope.debugHexColor = "#000";
-    $scope.previewStrikeout = "";
+    $scope.previewHexColor = "#000";
+    $scope.previewStrikeoutStyle = "";
     $scope.hueBridgeIp = "localhost";
     $scope.hueClientId = "newdeveloper";
     $scope.isDisabled = true;
@@ -80,7 +80,7 @@ hueNgApp.controller("HueCtrl", function($scope) {
 
     $scope.clearPreviewColor = function () {
         $scope.previewColor = 0;
-        $scope.debugHexColor = "#ffffff";
+        $scope.previewHexColor = "#ffffff";
         $scope.previewStrikeout = "background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(255,0,0,1) 10px, transparent 8px);";
     };
 
@@ -101,7 +101,7 @@ hueNgApp.controller("HueCtrl", function($scope) {
         var color = hsbToRgb($scope.hueValue, $scope.saturation, $scope.brightness);
         $scope.previewColor = color[2] + color[1] * 256 + color[0] * (256 * 256);
         var hexColor = $scope.formatInt($scope.previewColor.toString(16), 6);
-        $scope.debugHexColor = "#" + hexColor;
+        $scope.previewHexColor = "#" + hexColor;
     };
 
     $scope.formatInt = function(intValue, totalSize) {
