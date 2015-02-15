@@ -23,79 +23,73 @@
       and the <a href="http://www.developers.meethue.com/">public Philips Hue API</a>
       </p>
     </div>
-      <h2>Connection </h2>
-      <p>Click the router icon to get the hue bridge IP; click the refresh icon to reconnect.</p>
-   
-<table>
-   <tr>
-    <td>Client&#8209;Id</td>
-    <td> <input  type="text" id="hueClientId" ng-model="hueClientId" title="Hue client id:  You may need to register this app with your bridge to use this page.  See http://www.developers.meethue.com/documentation/getting-started/"/></td>
-   </tr>
-   <tr>  
-    <td>Bridge&#8209;IP</td>
-    <td > <input   type="text" id="hueBridgeIp" ng-model="hueBridgeIp" title="Enter your hue bridge ip or hostname, or try to find it automatically with the router button."/></td>
-    <td >
-        <img src ="./images/router3.png" ng-click="findBridge()" title="Find your hue bridge." alt = "Find your hue bridge."/>
-    </td>
-    <td >
+    <h2>Connection </h2>
+    <p>Click the router icon to get the hue bridge IP.  Click the register/add user icon to register this page with your local hue bridge.  Click the 'refresh' icon to reconnect if needed.</p>
+    
+    <table>
+      <tr>
+        <td>Bridge&#8209;IP</td>
+        <td > <input   type="text" id="hueBridgeIp" ng-model="hueBridgeIp" title="Enter your hue bridge ip or hostname, or try to find it automatically with the router button."/></td>
+        <td >
+          <img src ="./images/router3.png" ng-click="findBridge()" title="Find your hue bridge." alt = "Find your hue bridge."/>
+        </td>
+        <td >
         <img src="./images/refresh62.png" ng-click="reconnect()" title = "Connect/reconnect" alt = "Connect/reconnect"/></td>
-   </tr>
-
-</table>
-
-
-
+      </tr>
+      <tr>
+        <td>Client&#8209;Id</td>
+        <td> <input  type="text" id="hueClientId" ng-model="hueClientId" title="Hue client id:  You may need to register this web-client with your Hue bridge by pressing the 'link' button on your hue bridge and the clicking the 'add user/register' button to the right.  Also see http://www.developers.meethue.com/documentation/getting-started/"/></td>
+        <td> <img src="./images/create1.png" ng-click="registerApp()" title = "Register this client (add user) with your hue bridge." alt = "Register this client (add user) with your hue bridge."/></td>
+      </tr>
+    </table>
     <h2>Lights</h2>
     <p>
-      {{getFormattedLightList()}}
+    {{getFormattedLightList()}}
     </p>
-      <h2>Settings {{updating}}
-      </h2>
-      <table>
-        <tr>
-          <td colspan="2">State</td>
-          <td colspan="4">
-            <div class="btn-group btn-group-xs" role="group" aria-label="...">
-              <button ng-disabled="isDisabled" ng-click="setOnOff(true)" type="button" class="btn btn-default" title="Turn lights on">On</button>
-              <button ng-disabled="isDisabled" ng-click="setOnOff(false)" type="button" class="btn btn-default" title="Turn lights off">Off</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">Temperature</td>
-          <td colspan="4">
+    <h2>Settings {{updating}}
+    </h2>
+    <table>
+      <tr>
+        <td colspan="2">State</td>
+        <td colspan="4">
+          <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button ng-disabled="isDisabled" ng-click="setOnOff(true)" type="button" class="btn btn-default" title="Turn lights on.">On</button>
+            <button ng-disabled="isDisabled" ng-click="setOnOff(false)" type="button" class="btn btn-default" title="Turn lights off.">Off</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">Temperature</td>
+        <td colspan="4">
           <rangetemp></rangetemp><span style = "{{temperatureDirtyState}};">
-<span style = "color:black">
-          {{colorTemperature}}K</span></span></td>
-
-          <td rowspan="4" colspan="2">
-             <div style="border-style:solid;border-color:black;border-width:1px;float:right;margin:2px;display:inline-block;width:48px;height:96px;background-color:{{previewHexColor}};{{previewStrikeoutStyle}}"> <span style="float:right;"></span></div>
-          </td>
-
-        </tr>
-        <tr>
-          <td colspan="2">Hue</td>
-          <td colspan="4"><rangehue></rangehue>
-            <span style="{{hueSaturationDirtyState}};"><span style="color:black;">{{formatInt(hueValue,5)}}</span></span>
-          </td>
-
-        </tr>
-        <tr>
-          <td colspan="2">Saturation</td>
-          <td colspan="4"><rangesaturation></rangesaturation><span style="{{hueSaturationDirtyState}};"><span style="color:black;">{{formatInt(saturation,3)}}</span></span></td>
-        </tr>
-        <tr>
-          <td colspan="2">Brightness</td>
-          <td colspan="4"><rangebright></rangebright><span>{{formatInt(brightness,3)}}</span></td>
-        </tr>
-          </table>
-          <input id ="checkboxDebug" type="checkbox" ng-model="debug" title="Show debug info in alert boxes."/>
-          <label for="checkboxDebug">Debug</label>
-          <hr>
-          <a href="mailto:sv@stevenvictor.net">
-          <img src="./images/close13.png" title="email" alt="email"/></a> |
-          <a href="https://github.com/smycynek/">
-          <img src="./images/github7.png" title="github" alt="github"/></a> |
-          <a href="about.html"><img src="./images/creative.png" title="licensing" alt="licensing"/></a>
-        </body>
-      </html>
+          <span style = "color:black">
+        {{colorTemperature}}K</span></span></td>
+        <td rowspan="4" colspan="2">
+          <div title="Color preview for setting hue, saturation, and brightness.  Not applicable when setting color temperature." style="border-style:solid;border-color:black;border-width:1px;float:right;margin:2px;display:inline-block;width:52px;height:96px;background-color:{{previewHexColor}};{{previewStrikeoutStyle}}"> <span style="float:right;"></span></div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">Hue</td>
+        <td colspan="4"><rangehue></rangehue>
+          <span style="{{hueSaturationDirtyState}};"><span style="color:black;">{{formatInt(hueValue,5)}}</span></span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">Saturation</td>
+        <td colspan="4"><rangesaturation></rangesaturation><span style="{{hueSaturationDirtyState}};"><span style="color:black;">{{formatInt(saturation,3)}}</span></span></td>
+      </tr>
+      <tr>
+        <td colspan="2">Brightness</td>
+        <td colspan="4"><rangebright></rangebright><span>{{formatInt(brightness,3)}}</span></td>
+      </tr>
+    </table>
+    <input id ="checkboxDebug" type="checkbox" ng-model="debug" title="Show debug info in alert boxes."/>
+    <label for="checkboxDebug">Debug</label>
+    <hr>
+    <a href="mailto:sv@stevenvictor.net">
+    <img src="./images/close13.png" title="email" alt="email"/></a> |
+    <a href="https://github.com/smycynek/">
+    <img src="./images/github7.png" title="github" alt="github"/></a> |
+    <a href="about.html"><img src="./images/creative.png" title="licensing" alt="licensing"/></a>
+  </body>
+</html>

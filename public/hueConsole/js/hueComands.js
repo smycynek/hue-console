@@ -78,6 +78,22 @@ hueNgApp.controller("HueCtrl", function($scope) {
 
     };
 
+    $scope.registerApp = function() {
+        var success = function(data) {
+            if ((typeof data[0].error) !== 'undefined') {
+                alert("Error: " + data[0].error.description);
+            } else {
+                alert("Application registered: " + data[0].success.username);
+            }
+        }, failure = function(data) {
+            alert("Failure calling user.create(): " + JSON.stringify(data));
+        };
+
+        $scope.initHue();
+        alert("Press the 'link' button on your hue bridge and click 'OK.'");
+        $scope.user.create("HueConsole", success, failure);
+
+    };
     //Display all available light names as a simple comma-delimited list.
     $scope.getFormattedLightList = function() {
         return $scope.lightList.join(", ");
