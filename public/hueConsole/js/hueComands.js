@@ -5,8 +5,8 @@
 /*global kelvinToMired */
 /*global miredToKelvin */
 /*global hsbToRgb */
-
-
+/*global rbgTripleToSingle */
+/*global formatInt */
 
 //main Angular app 
 var hueNgApp = angular.module("hueNgApp", []);
@@ -16,7 +16,6 @@ hueNgApp.controller("HueCtrl", function($scope) {
     "use strict";
     $scope.debug = false;
     $scope.hueApi = jsHue();
-    $scope.previewColor = 0;
     $scope.previewHexColor = "#000";
     $scope.previewStrikeoutStyle = "";
     $scope.hueBridgeIp = "localhost";
@@ -71,37 +70,30 @@ hueNgApp.controller("HueCtrl", function($scope) {
         return $scope.lightList.join(", ");
     };
 
-
-///
-
-    $scope.clearPreviewStrikeout = function() {
-        $scope.previewStrikeout = "";
+    $scope.setPreviewStrikoutStyle = function() {
+        var background = "45deg, #ff0000, #ff0000 5px, transparent 5px, transparent 10px";
+        $scope.previewStrikeoutStyle = "background: repeating-linear-gradient(" + background + ");";
     };
 
-    $scope.clearPreviewColor = function () {
-        $scope.previewColor = 0;
-        $scope.previewHexColor = "#ffffff";
-        $scope.previewStrikeout = "background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(255,0,0,1) 10px, transparent 8px);";
+    $scope.clearPreviewStrikeoutStyle = function() {
+        $scope.previewStrikeoutStyle = "";
+    };
+
+    $scope.setPreviewColor = function() {
+        var colorTriple = hsbToRgb($scope.hueValue, $scope.saturation, $scope.brightness);
+        $scope.previewHexColor = "#" +  $scope.formatInt(rbgTripleToSingle(colorTriple).toString(16), 6);
     };
 
     $scope.setTemperatureDirty = function() {
         $scope.hueSaturationDirtyState = $scope.currentValueStyle;
         $scope.temperatureDirtyState = $scope.dirtyValueStyle;
-        $scope.clearPreviewStrikeout();
+        $scope.clearPreviewStrikeoutStyle();
     };
 
     $scope.setHueSaturationDirty = function() {
         $scope.temperatureDirtyState = $scope.currentValueStyle;
         $scope.hueSaturationDirtyState = $scope.dirtyValueStyle;
-        $scope.clearPreviewColor();
-    };
-
-
-    $scope.setPreviewColor = function() {
-        var color = hsbToRgb($scope.hueValue, $scope.saturation, $scope.brightness);
-        $scope.previewColor = color[2] + color[1] * 256 + color[0] * (256 * 256);
-        var hexColor = $scope.formatInt($scope.previewColor.toString(16), 6);
-        $scope.previewHexColor = "#" + hexColor;
+        $scope.setPreviewStrikoutStyle();
     };
 
     $scope.formatInt = function(intValue, totalSize) {
@@ -178,7 +170,6 @@ hueNgApp.controller("HueCtrl", function($scope) {
     $scope.setAll = function(client, data, totalLights) {
         var id, success = function(data) {
             $scope.debugAlert("setAll", data);
-           // $scope.setPreviewColor();
         }, failure = function(data) {
             alert("Error setting lights: " + JSON.stringify(data));
         };
@@ -198,21 +189,6 @@ hueNgApp.controller("HueCtrl", function($scope) {
         $scope.setAll($scope.user, {
             ct: mired
         }, $scope.lightCount);
-        $scope.setHueSaturationDirty();
-         //$scope.setPreviewColor();
-       // $scope.$apply();
-    };
-
-    $scope.setRed = function() {
-        $scope.setHue(0);
-    };
-
-    $scope.setBlue = function() {
-        $scope.setHue(46920);
-    };
-
-    $scope.setGreen = function() {
-        $scope.setHue(25500);
     };
 
     $scope.setBrightness = function(val) {
@@ -223,15 +199,11 @@ hueNgApp.controller("HueCtrl", function($scope) {
         $scope.setPreviewColor();
     };
 
-
-
     $scope.setHue = function(val) {
         $scope.hueValue = val;
         $scope.setAll($scope.user, {
             hue: $scope.hueValue
         }, $scope.lightCount);
-        $scope.setTemperatureDirty();
-        $scope.setPreviewColor();
     };
 
     $scope.setSaturation = function(val) {
@@ -239,8 +211,6 @@ hueNgApp.controller("HueCtrl", function($scope) {
         $scope.setAll($scope.user, {
             sat: $scope.saturation
         }, $scope.lightCount);
-        $scope.setTemperatureDirty();
-        $scope.setPreviewColor();
     };
 });
 
@@ -287,7 +257,6 @@ hueNgApp.directive("rangesaturation", function() {
             rangeControl.bind("input", function() {
                 scope.$apply(function() {
                     scope.saturation = Math.round(rangeControl.val());
-                    scope.setSaturation(scope.saturation);
                     scope.setTemperatureDirty();
                     scope.setPreviewColor();
                 });
@@ -338,7 +307,6 @@ hueNgApp.directive("rangebright", function() {
             rangeControl.bind("input", function() {
                 scope.$apply(function() {
                     scope.brightness = Math.round(rangeControl.val());
-                    scope.setBrightness(scope.brightness);
                     scope.setPreviewColor();
                 });
             });

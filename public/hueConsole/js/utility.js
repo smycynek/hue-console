@@ -1,3 +1,12 @@
+var formatInt = function(intValue, totalSize) {
+    "use strict";
+    var formattedString = String(intValue);
+    while (formattedString.length < totalSize) {
+        formattedString = "0" + formattedString;
+    }
+    return formattedString;
+};
+
 var kelvinToMired = function(kelvin) {
     "use strict";
     var mired = 1000000 / kelvin;
@@ -25,6 +34,11 @@ var miredToKelvin = function(mired) {
 var colorNormalizedToEightBit = function(value) {
     "use strict";
     return (Math.floor(value * 255));
+};
+
+var rbgTripleToSingle = function(rgbTriple) {
+    "use strict";
+    return (rgbTriple[2] + (rgbTriple[1] * 256) + (rgbTriple[0] * (256 * 256)));
 };
 
 var hsbToRgb = function(hue, sat, value) {
