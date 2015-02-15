@@ -1,3 +1,7 @@
+//Functions for color format conversion, number formatting...
+
+
+//Add leading zeros to string format of a number.
 var formatInt = function(intValue, totalSize) {
     "use strict";
     var formattedString = String(intValue);
@@ -7,6 +11,7 @@ var formatInt = function(intValue, totalSize) {
     return formattedString;
 };
 
+//Hue uses Mired for color temperature, but most people are more familiar with Kelvin.
 var kelvinToMired = function(kelvin) {
     "use strict";
     var mired = 1000000 / kelvin;
@@ -31,16 +36,20 @@ var miredToKelvin = function(mired) {
     return Math.floor(kelvin);
 };
 
+//Convert a decimal value between 0 and 1 to an integer 0-255
 var colorNormalizedToEightBit = function(value) {
     "use strict";
-    return (Math.floor(value * 255));
+    return (Math.round(value * 255));
 };
 
+//Convert an array of three eight-bit values [0-255] to 24-bit color in a single value
 var rbgTripleToSingle = function(rgbTriple) {
     "use strict";
     return (rgbTriple[2] + (rgbTriple[1] * 256) + (rgbTriple[0] * (256 * 256)));
 };
 
+
+//Formulas from Wikipedia - http://en.wikipedia.org/wiki/HSL_and_HSV
 var hsbToRgb = function(hue, sat, value) {
     "use strict";
     var satNormal = sat / 255,
@@ -77,7 +86,5 @@ var hsbToRgb = function(hue, sat, value) {
         green = 0;
         blue = x;
     }
-
     return [colorNormalizedToEightBit(red + m), colorNormalizedToEightBit(green + m), colorNormalizedToEightBit(blue + m)];
-
 };

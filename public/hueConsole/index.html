@@ -29,16 +29,16 @@
 <table>
    <tr>
     <td>Client&#8209;Id</td>
-    <td> <input  type="text" id="hueClientId" ng-model="hueClientId"/></td>
+    <td> <input  type="text" id="hueClientId" ng-model="hueClientId" title="Hue client id:  You may need to register this app with your bridge to use this page.  See http://www.developers.meethue.com/documentation/getting-started/"/></td>
    </tr>
    <tr>  
     <td>Bridge&#8209;IP</td>
-    <td > <input   type="text" id="hueBridgeIp" ng-model="hueBridgeIp"/></td>
+    <td > <input   type="text" id="hueBridgeIp" ng-model="hueBridgeIp" title="Enter your hue bridge ip or hostname, or try to find it automatically with the router button."/></td>
     <td >
-        <img src ="./images/router3.png" ng-click="findBridge()" alt = "Find your hue bridge."/>
+        <img src ="./images/router3.png" ng-click="findBridge()" title="Find your hue bridge." alt = "Find your hue bridge."/>
     </td>
     <td >
-        <img src="./images/refresh62.png" ng-click="reconnect()" alt = "Connect/reconnect"/></td>
+        <img src="./images/refresh62.png" ng-click="reconnect()" title = "Connect/reconnect" alt = "Connect/reconnect"/></td>
    </tr>
 
 </table>
@@ -56,8 +56,8 @@
           <td colspan="2">State</td>
           <td colspan="4">
             <div class="btn-group btn-group-xs" role="group" aria-label="...">
-              <button ng-disabled="isDisabled" ng-click="setOnOff(true)" type="button" class="btn btn-default">On</button>
-              <button ng-disabled="isDisabled" ng-click="setOnOff(false)" type="button" class="btn btn-default">Off</button>
+              <button ng-disabled="isDisabled" ng-click="setOnOff(true)" type="button" class="btn btn-default" title="Turn lights on">On</button>
+              <button ng-disabled="isDisabled" ng-click="setOnOff(false)" type="button" class="btn btn-default" title="Turn lights off">Off</button>
             </div>
           </td>
         </tr>
@@ -89,13 +89,13 @@
           <td colspan="4"><rangebright></rangebright><span>{{formatInt(brightness,3)}}</span></td>
         </tr>
           </table>
-          <input id ="checkboxDebug" type="checkbox" ng-model="debug"/>
+          <input id ="checkboxDebug" type="checkbox" ng-model="debug" title="Show debug info in alert boxes."/>
           <label for="checkboxDebug">Debug</label>
           <hr>
           <a href="mailto:sv@stevenvictor.net">
-          <img src="./images/close13.png" alt="email"/></a> |
+          <img src="./images/close13.png" title="email" alt="email"/></a> |
           <a href="https://github.com/smycynek/">
-          <img src="./images/github7.png" alt="github"/></a> |
-          <a href="about.html"><img src="./images/creative.png" alt="licensing"/></a>
+          <img src="./images/github7.png" title="github" alt="github"/></a> |
+          <a href="about.html"><img src="./images/creative.png" title="licensing" alt="licensing"/></a>
         </body>
       </html>
