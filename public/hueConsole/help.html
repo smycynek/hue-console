@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="stevenvictor.net">
+        <meta name="author" content="SVM">
+        <title>Hue Console Help</title>
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="styles/styles.css">
+        <link href="lib/bootstrap/css/jumbotron-narrow.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <h1>About the Hue Console</h1>
+            <p>This is just a fun project to try out the Hue API in the Angular web environment and learn a little bit about color models.  One thing to point out is that client sets color temperature.  Most apps, including the official one from Philps, don't, and color temperature is very important for mood, psychology, and simply matching the decor, time of day, and other light sources in your home.
+            </p>
+            <h2>FAQ</h2>
+            <dl>
+                <dt>Can I use this site from my phone or tablet?</dt>
+                <dd>Yes, but you'll need to host it locally somewhere on the same network as your hue bridge or emulator, such as your laptop or other small web-server.</dd><p/>
+                <dt>Then why didn't you make it a phone app? :)</dt>
+                <dd>I may in the future -- this was just for fun, and if you have hue lights, you probably have a few spare laptops around :) </dd><p/>
+                <dt>What is this "register/add user" button? <img src="./images/create1.png" alt="Register this client (add user) with your hue bridge." title="Register this client (add user) with your hue bridge."></dt>
+                <dd>Hue has some built in security to prevent unauthorized use.  It's nothing as sophisticated as OAuth, but it's reasonable for now.  Aside from being on the same local network, the out-of-the-box Hue needs to be configured to work with each new client (official philips app, other apps, this app, etc...).  To register your client app, you must press the 'link' button on the actual hue bridge device and then click the 'register/add user' button on the main page.  This will register a client with the name specified in the 'Client-Id' field.  'newdeveloper' is the default client id for Hue API applications, so it may already be registered with your bridge.  See <a href="Also see http://www.developers.meethue.com/documentation/getting-started/">http://www.developers.meethue.com/documentation/getting-started/</a> for details</dd><p/>
+                <dt>Why do some text and areas on the page display with
+                <span style="color:red;text-decoration:line-through;"><span style="color:black;">red strikethrough?</span></span></dt>
+                <dd>While you can set any parameter on Hue that you want (hue, saturation, color temperature, etc...), not all values apply at all times.  For example, since color temperature only corresponds to whiteish light values with a reddish to blueish cast, many colors, such as a deep intense lime green, don't have a corresponding color temperature value, at least not on the Hue system.  Therefore, if you set your light colors, the temperature value is shown with strikeout to show that is currently doesn't apply.  It is possible to convert color temperature to an RGB value preview, but I'm not sure what this conversion formula is, and I have heard it is inherently inaccurate, so I don't currently support it.  I could use the Hue system to help calculate HSB (and then derive RGB) from color temperature, but that would cause a fair amount of network lag, so I'd rather not support that either.</dd> <p/>
+            </dl>
+        </div>
+    </body>
+</html>
