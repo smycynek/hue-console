@@ -15,19 +15,29 @@
     <body>
         <div class="container">
             <h1>About the Hue Console</h1>
-            <p>This is just a fun project to try out the Hue API in the Angular web environment and learn a little bit about color models.  One thing to point out is that client sets color temperature.  Most apps, including the official one from Philps, don't, and color temperature is very important for mood, psychology, and simply matching the decor, time of day, and other light sources in your home.
+            <p>This is a project to try out the Philips Hue API in the AngularJS web environment and learn a little bit about color models and the 'Internet of Things'.  
             </p>
             <h2>FAQ</h2>
             <dl>
+                <dt>What is Hue?</dt>
+                <dd> Hue is a system of programmable light bulbs from Philips.  <a href="http://www2.meethue.com/en-us/what-hue-does/ambience/">http://www2.meethue.com/en-us/what-hue-does/ambience/</a>.  It's a great way to get started with smart home automation, the internet of things, REST APIs, and web and mobile development without worrying about turning your heat up to 120 degrees and unlocking all your doors at 3 a.m. whenever your code throws an exception :)
+                <p>I became interested in light because of the universal appeal.  Not everyone is into wearables, like Google Glass, and not everyone wants a smart coffee-maker, smart dog collar, or JavaScript-controlled helicoptor, but everyone in the world, regardless of age, lifestyle, career, ethnicity, geo-location, or any other demographic factor, needs, loves, and seeks light--especially quality, comforting light. Programmable lights are something the whole family can appreciate and benefit from, so I thought it was a great place to start when looking at the <a href="http://en.wikipedia.org/wiki/Internet_of_Things">'Internet of Things.'</a></p>
+                </dd><p/>
+
+                <dt>What does this app do that the stock phone app for Hue doesn't do?</dt>
+                <dd>One thing to point out is that this client sets <a href="http://en.wikipedia.org/wiki/Color_temperature">color temperature</a>.  Most apps, including the official one from Philips, don't, and color temperature is very important for mood, psychology, and simply matching the decor, time of day, and other light sources in your home.
+                </dd><p/>
                 <dt>Can I use this site from my phone or tablet?</dt>
                 <dd>Yes, but you'll need to host it locally somewhere on the same network as your hue bridge or emulator, such as your laptop or other small web-server.</dd><p/>
                 <dt>Then why didn't you make it a phone app? :)</dt>
-                <dd>I may in the future -- this was just for fun, and if you have hue lights, you probably have a few spare laptops around :) </dd><p/>
+                <dd>I may in the future -- this was just for fun.</dd><p/>
                 <dt>What is this "register/add user" button? <img src="./images/create1.png" alt="Register this client (add user) with your hue bridge." title="Register this client (add user) with your hue bridge."></dt>
-                <dd>Hue has some built in security to prevent unauthorized use.  It's nothing as sophisticated as OAuth, but it's reasonable for now.  Aside from being on the same local network, the out-of-the-box Hue needs to be configured to work with each new client (official philips app, other apps, this app, etc...).  To register your client app, you must press the 'link' button on the actual hue bridge device and then click the 'register/add user' button on the main page.  This will register a client with the name specified in the 'Client-Id' field.  'newdeveloper' is the default client id for Hue API applications, so it may already be registered with your bridge.  See <a href="Also see http://www.developers.meethue.com/documentation/getting-started/">http://www.developers.meethue.com/documentation/getting-started/</a> for details</dd><p/>
+                <dd>Hue has some built-in security to prevent unauthorized use.  It's nothing as sophisticated as OAuth, but it's reasonable for now.  Aside from being on the same local network, the out-of-the-box Hue needs to be configured to work with each new client (official philips app, other apps, this app, etc...).  To register your client app, you must press the 'link' button on the actual hue bridge device and then click the 'register/add user' button on the main page.  This will register a client with the name specified in the 'Client-Id' field.  'newdeveloper' is the default client id for Hue API applications, so it may already be registered with your bridge.  See <a href="Also see http://www.developers.meethue.com/documentation/getting-started/">http://www.developers.meethue.com/documentation/getting-started/</a> for details</dd><p/>
                 <dt>Why do some text and areas on the page display with
                 <span style="color:red;text-decoration:line-through;"><span style="color:black;">red strikethrough?</span></span></dt>
                 <dd>While you can set any parameter on Hue that you want (hue, saturation, color temperature, etc...), not all values apply at all times.  For example, since color temperature only corresponds to whiteish light values with a reddish to blueish cast, many colors, such as a deep intense lime green, don't have a corresponding color temperature value, at least not on the Hue system.  Therefore, if you set your light colors, the temperature value is shown with strikeout to show that is currently doesn't apply.  It is possible to convert color temperature to an RGB value preview, but I'm not sure what this conversion formula is, and I have heard it is inherently inaccurate, so I don't currently support it.  I could use the Hue system to help calculate HSB (and then derive RGB) from color temperature, but that would cause a fair amount of network lag, so I'd rather not support that either.</dd> <p/>
+                <dt>I have more than one Hue light -- can I set indiviual light colors/states?</dt>
+                <dd>Not currently.  I didn't want to add too much UI to my first Hue app. If I create another app with a narrower focus (just color temperature), I might add support for individual lights or even scenes.</dd><p/>
             </dl>
         </div>
     </body>
