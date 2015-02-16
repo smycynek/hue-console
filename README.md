@@ -6,6 +6,6 @@ Hue Console
 *  Require a local Philips Hue installation or a hue emulator, such as
    https://www.npmjs.com/package/hue-simulator
 *  Node users, just use 'npm install' and './bin/www'
-*  More details at [https://github.com/smycynek/hue-console/blob/master/public/hueConsole/help.html][https://github.com/smycynek/hue-console/blob/master/public/hueConsole/help.html]
+*  More details at [https://github.com/smycynek/hue-console/blob/master/public/hueConsole/help.html](https://github.com/smycynek/hue-console/blob/master/public/hueConsole/help.html)
 
 ![Screen Shot](./hue_screenshot.PNG)
