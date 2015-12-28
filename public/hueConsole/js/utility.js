@@ -2,7 +2,7 @@
  * hue-console 
  * Simple web-console for Philips Hue using John Peloquin's JsHue library
  *
- * version 0.1.1
+ * version 0.2.1
  * Copyright 2014-2015 Steven Mycynek
  */
 

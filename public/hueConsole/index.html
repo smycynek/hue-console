@@ -39,8 +39,8 @@
       </tr>
       <tr>
         <td>Client&#8209;Id</td>
-        <td> <input  type="text" id="hueClientId" ng-model="hueClientId" title="Hue client id:  You may need to register this web-client with your Hue bridge by pressing the 'link' button on your hue bridge and the clicking the 'add user/register' button to the right.  Also see http://www.developers.meethue.com/documentation/getting-started/"/></td>
-        <td> <img src="./images/create1.png" ng-click="registerApp()" title = "Register this client (add user) with your hue bridge." alt = "Register this client (add user) with your hue bridge."/></td>
+        <td> <input readonly id="hueClientId" ng-model="hueClientId" title="Hue client id:  You may need to register this web-client with your Hue bridge by pressing the 'link' button on your hue bridge and the clicking the 'add user/register' button to the right.  Note that the client Id is set by hue and is not user-editable.  Also see http://www.developers.meethue.com/documentation/getting-started/"/></td>
+        <td> <img src="./images/create1.png" ng-click="registerApp()" title = "Register this client with your hue bridge." alt = "Register this client with your hue bridge."/></td>
       </tr>
     </table>
     <h2>Lights</h2>

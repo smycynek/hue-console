@@ -2,7 +2,7 @@
  * hue-console 
  * Simple web-console for Philips Hue using John Peloquin's JsHue library
  *
- * version 0.1.1
+ * version 0.2.1
  * Copyright 2014-2015 Steven Mycynek
  */
  
@@ -92,6 +92,8 @@ hueNgApp.controller("HueCtrl", function($scope) {
                 alert("Error: " + data[0].error.description);
             } else {
                 alert("Application registered: " + data[0].success.username);
+                $scope.hueClientId = data[0].success.username;
+                $scope.$apply();
             }
         }, failure = function(data) {
             alert("Failure calling user.create(): " + JSON.stringify(data));

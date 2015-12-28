@@ -331,7 +331,7 @@ var jsHueAPI = function(XMLHttpRequest, JSON) {
                          */
                         create: function(type, success, failure) {
                             var data = {
-                                username: username,
+                               /* username: username, */ //Remove for Feb 2016
                                 devicetype: type
                             };
                             return _post(_bridgeUrl, data, success, failure);
