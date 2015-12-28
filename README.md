@@ -1,5 +1,5 @@
 Hue Console
-Version 0.1.1.
+Version 0.2.1.
 
 Copyright (c) 2014-2015 Steven Mycynek
 ===============
