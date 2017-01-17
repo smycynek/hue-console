@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <title>Hue Console</title>
     <script src="./lib/angularjs/angular.min.js"></script>
+    <script src="./lib/angularjs/angular-cookies.min.js"></script>
     <script src = "./lib/jshue.js"></script>
+
     <script src = "./js/utility.js"></script>
     <script src = "./js/hueComands.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +26,7 @@
       </p>
     </div>
     <h2>Connection </h2>
+    <span style="color:red" ng-hide="cookiesEnabled()">Enable cookies to save the app registration.</span>
     <div class="hidden-xs">
     <p>Click the 'router' icon to get the hue bridge IP.  Click the 'register/add user' icon to register this client with your local hue bridge.  Click the 'refresh' icon to reconnect to the hue bridge if needed.</p>
     </div>  
