@@ -2,7 +2,7 @@
  * hue-console
  * Simple web-console for Philips Hue using John Peloquin's JsHue library
  *
- * version 0.3.0
+ * version 0.3.1
  * Copyright 2014-2017 Steven Mycynek
  */
 
@@ -39,8 +39,8 @@ hueNgApp.controller("HueCtrl", function ($scope, $cookies) {
     $scope.dirtyValueStyle = "color:red;text-decoration:line-through";
     $scope.temperatureDirtyState = $scope.currentValueStyle;
     $scope.hueSaturationDirtyState = $scope.currentValueStyle;
-
-    $scope.cookieName = "net.stevenvictor.hueConsole.hueAppId6";
+    $scope.cookieNameAppId = "net.stevenvictor.hueConsole.hueAppId6";
+    $scope.cookieNameBridgeIP = "net.stevenvictor.hueConsole.hueBridgeIP";
     $scope.cookieLife = "Fri, 28-Feb-2020 00:00:00 GMT";
 
     $scope.cookiesEnabled = function () {
@@ -49,7 +49,7 @@ hueNgApp.controller("HueCtrl", function ($scope, $cookies) {
 
 
     $scope.getHueIdCookie = function () {
-        var cookie = $cookies.get($scope.cookieName);
+        var cookie = $cookies.get($scope.cookieNameAppId);
         if (cookie === undefined) {
             return "click 'register' button -->";
         } else {
@@ -58,10 +58,27 @@ hueNgApp.controller("HueCtrl", function ($scope, $cookies) {
     };
 
     $scope.setHueIdCookie = function (hueId) {
-        $cookies.put($scope.cookieName, hueId, {"expires": $scope.cookieLife});
+        $cookies.put($scope.cookieNameAppId, hueId, {"expires": $scope.cookieLife});
     };
 
     $scope.hueClientId = $scope.getHueIdCookie();
+
+    $scope.getHueBridgeIP = function () {
+        var cookie = $cookies.get($scope.cookieNameBridgeIP);
+        if (cookie === undefined) {
+            return "localhost";
+        } else {
+            return cookie;
+        }
+    };
+
+    $scope.setHueBridgeIP = function (hueIP) {
+        $cookies.put($scope.cookieNameBridgeIP, hueIP, {"expires": $scope.cookieLife});
+    };
+
+    $scope.hueBridgeIp = $scope.getHueBridgeIP();
+
+
 
     $scope.debugAlert = function (caption, data) {
         if ($scope.debug) {
@@ -89,10 +106,12 @@ hueNgApp.controller("HueCtrl", function ($scope, $cookies) {
             success = function (data) {
                 try {
                     $scope.debugAlert("findBridge", data);
-                    var ip = data[0].internalipaddress;
-
+                    var ip;
+                    ip = data[0].internalipaddress;
+                  
                     if (confirm("Found bridge IP " + ip + ".  Use to connect?")) {
                         $scope.hueBridgeIp = ip;
+                        $scope.setHueBridgeIP(ip);
                         $scope.$apply();
                         $scope.reconnect();
                     } else {
@@ -106,6 +125,21 @@ hueNgApp.controller("HueCtrl", function ($scope, $cookies) {
                 alert(errMessage + ", Error Data: " + JSON.stringify(data));
             };
         $scope.hueApi.discover(success, failure);
+
+    };
+
+    $scope.loadStoredBridge = function () {
+        var storedIP = $scope.getHueBridgeIP();
+        if (storedIP === "localhost") {
+            return false;
+        }
+        else {
+              $scope.hueBridgeIp = storedIP;
+              $scope.reconnect();
+              $scope.$apply();
+
+              return true;
+        }
 
     };
 
@@ -182,7 +216,9 @@ hueNgApp.controller("HueCtrl", function ($scope, $cookies) {
     //Called when page loads
     $scope.mainControl = function () {
         $scope.debugAlert("mainControl", "Debug mode: " + $scope.debug);
-        $scope.findBridge();
+        if ($scope.loadStoredBridge() === false) {
+            $scope.findBridge();
+        }
     };
 
     //Query the state of a light and the adjust hue, saturation, and brightness controls
