@@ -2,8 +2,8 @@
  * hue-console
  * Simple web-console for Philips Hue using John Peloquin's JsHue library
  *
- * version 0.3.0
- * Copyright 2014-2016 Steven Mycynek
+ * version 0.3.1
+ * Copyright 2014-2017 Steven Mycynek
  */
 
 //Functions for color format conversion, number formatting...
