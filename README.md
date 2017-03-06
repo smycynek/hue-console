@@ -1,9 +1,6 @@
-Hue Console
-Version 0.2.1.
-
-Copyright (c) 2014-2017 Steven Mycynek
-===============
-
+# Hue Console
+* Version 0.2.1.
+* Copyright (c) 2014-2017 Steven Mycynek
 *  A simple AngularJS app to demonstrate the Philips Hue API. (http://www.developers.meethue.com/)
 *  Uses jshue - (https://github.com/blargoner/jshue) (MIT License)
 *  Require a local Philips Hue installation or a hue emulator, such as
